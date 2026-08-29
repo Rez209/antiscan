@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Antiscan{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div class="brand">
+        <span class="mark">antiscan<span class="dot">.</span></span>
+        <span class="tag">4-engine file scan</span>
+      </div>
+      <nav class="top-nav">
+        <a href="{{ url_for('index') }}">Scan</a>
+        <a href="{{ url_for('history') }}">History</a>
+      </nav>
+    </header>
+    {% block content %}{% endblock %}
+    <footer class="foot">
+      antiscan — independent multi-engine scanner · each engine runs as its own isolated worker, watching a shared folder, exactly like the original 4-VM design.
+    </footer>
+  </div>
+</body>
+</html>

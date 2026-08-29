@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Antiscan — scan a file{% endblock %}
+{% block content %}
+  <h1 class="headline">Один файл. Чотири незалежні движки.</h1>
+  <p class="lede">Кожен движок працює як окрема ізольована одиниця — сигнатури, YARA-правила, евристика та репутація за хешем — і звітує назад через спільну папку, як окрема віртуалка в оригінальній архітектурі.</p>
+
+  <form class="dropzone" id="dz" action="{{ url_for('scan') }}" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" id="file-input" required>
+    <label class="pick" for="file-input">Обрати файл</label>
+    <div class="fname" id="fname">Файл не обрано</div>
+    <div class="submit-row">
+      <button class="primary" id="submit-btn" type="submit">Сканувати</button>
+    </div>
+  </form>
+
+  <div class="engines-strip">
+    <div class="engine-card">
+      <div class="n">Engine 01</div>
+      <div class="name">SignatureScan</div>
+      <div class="desc">Пошук байтових/рядкових сигнатур відомих загроз у файлі.</div>
+    </div>
+    <div class="engine-card">
+      <div class="n">Engine 02</div>
+      <div class="name">YaraScan</div>
+      <div class="desc">Структурні YARA-правила: макроси, обфускація, підозрілі патерни.</div>
+    </div>
+    <div class="engine-card">
+      <div class="n">Engine 03</div>
+      <div class="name">HeuristicScan</div>
+      <div class="desc">Ентропія, невідповідність типу файлу і розширення, подвійні розширення.</div>
+    </div>
+    <div class="engine-card">
+      <div class="n">Engine 04</div>
+      <div class="name">HashReputation</div>
+      <div class="desc">Звірка SHA-256 з локальною базою репутації відомих файлів.</div>
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById('file-input');
+    const fname = document.getElementById('fname');
+    const dz = document.getElementById('dz');
+    input.addEventListener('change', () => {
+      fname.textContent = input.files.length ? input.files[0].name : 'Файл не обрано';
+    });
+    ['dragover'].forEach(evt => dz.addEventListener(evt, e => { e.preventDefault(); dz.classList.add('drag'); }));
+    ['dragleave', 'drop'].forEach(evt => dz.addEventListener(evt, () => dz.classList.remove('drag')));
+    dz.addEventListener('drop', e => {
+      if (e.dataTransfer.files.length) {
+        input.files = e.dataTransfer.files;
+        fname.textContent = input.files[0].name;
+      }
+    });
+    dz.addEventListener('submit', () => {
+      document.getElementById('submit-btn').disabled = true;
+      document.getElementById('submit-btn').textContent = 'Сканування...';
+    });
+  </script>
+{% endblock %}

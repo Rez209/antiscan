@@ -1,0 +1,10 @@
+logs/
+venv/
+shared/incoming/*
+shared/results/*
+shared/history/*
+!shared/incoming/.gitkeep
+!shared/results/.gitkeep
+!shared/history/.gitkeep
+__pycache__/
+*.pyc

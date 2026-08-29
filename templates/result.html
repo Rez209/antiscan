@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Antiscan — {{ filename }}{% endblock %}
+{% block content %}
+  <div class="report">
+    <div class="meta-row">
+      <div class="file-meta">
+        <div class="fname">{{ filename }}</div>
+        <dl class="meta-grid">
+          <dt>job id</dt><dd>{{ job_id }}</dd>
+          <dt>sha256</dt><dd>{{ sha256 }}</dd>
+          <dt>size</dt><dd>{{ size }} bytes</dd>
+        </dl>
+      </div>
+      <div class="stamp {{ summary.overall }}">
+        <div class="ratio">{{ summary.detections }}/{{ summary.total }}</div>
+        <div class="label">{{ summary.overall }}</div>
+      </div>
+    </div>
+
+    <table class="verdicts">
+      <thead>
+        <tr><th>Engine</th><th>Verdict</th><th>Detail</th><th>Time</th></tr>
+      </thead>
+      <tbody>
+        {% for engine, v in verdicts.items() %}
+        <tr>
+          <td><strong>{{ engine }}</strong></td>
+          <td><span class="badge {{ v.verdict }}">{{ v.verdict }}</span></td>
+          <td class="detail">{{ v.detail }}</td>
+          <td class="scan-ms">{% if v.scan_ms is not none %}{{ v.scan_ms }} ms{% else %}—{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="actions">
+      <a href="{{ url_for('index') }}">← Сканувати інший файл</a>
+    </div>
+  </div>
+{% endblock %}

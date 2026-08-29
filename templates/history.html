@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Antiscan — history{% endblock %}
+{% block content %}
+  <h1 class="headline">Історія сканувань</h1>
+  <p class="lede">Усі попередні перевірки, з підсумковим вердиктом.</p>
+
+  {% if entries %}
+  <table class="history">
+    <thead>
+      <tr><th>Файл</th><th>Вердикт</th><th>Детекцій</th><th>SHA-256</th></tr>
+    </thead>
+    <tbody>
+      {% for e in entries %}
+      <tr>
+        <td>{{ e.filename }}</td>
+        <td><span class="badge {{ e.summary.overall }}">{{ e.summary.overall }}</span></td>
+        <td>{{ e.summary.detections }}/{{ e.summary.total }}</td>
+        <td><code>{{ e.sha256[:20] }}…</code></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty">Ще немає жодного скану — почніть з головної сторінки.</div>
+  {% endif %}
+{% endblock %}

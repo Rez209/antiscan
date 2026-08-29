@@ -72,14 +72,14 @@ pip install -r requirements.txt
 
 Then open `http://localhost:5000`.
 
-`samples/eicar.com` is the industry-standard [EICAR test
-file](https://en.wikipedia.org/wiki/EICAR_test_file) — safe, and
-designed specifically to be recognized by antivirus products without
-being real malware. Uploading it through the UI is a good smoke test:
-it should come back flagged by `SignatureScan`, `YaraScan`, and
-`HashReputation`. Note your own OS antivirus may also flag this file
-on disk — that's expected and confirms it's a real, recognized test
-signature, not a sign of anything wrong.
+`samples/eicar.com` To smoke-test detection, you can create the industry-standard [EICAR test
+file](https://en.wikipedia.org/wiki/EICAR_test_file) yourself — safe, and
+designed specifically to be recognized by antivirus products without being
+real malware — and upload it through the UI. It should come back flagged by
+`SignatureScan`, `YaraScan`, and `HashReputation`. Note your own OS antivirus
+will likely flag this string the moment you save it to disk — that's
+expected, and confirms it's a real, recognized test signature, not a sign of
+anything wrong.
 
 ## Scope & honesty
 
